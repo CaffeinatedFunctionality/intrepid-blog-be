@@ -1,0 +1,34 @@
+version: '3.1'
+services:
+  intrepid-postgres:
+    image: postgres
+    container_name: intrepid-postgres
+    ports:
+      - 5432:5432
+    #    normally we would store a volume here, but for the purposes of this we aren't doing that
+    #    normally we would also always restart
+    environment:
+      - POSTGRES_PASSWORD=d22fdec943f819ae7d2df6249fdc0cea
+      - POSTGRES_USER=intrepid-admin
+      - POSTGRES_DB=intrepid-blog-db
+  intrepid-blog-be:
+    build: .
+    container_name: intrepid-blog-be
+    ports:
+      - 8821:8821
+    depends_on:
+      - intrepid-postgres
+    volumes:
+      - ./src:/usr/app/src
+    environment:
+      - POSTGRES_URL="postgresql://intrepid-admin:d22fdec943f819ae7d2df6249fdc0cea@intrepid-postgres:5432/intrepid-blog-db?schema=blog"
+      - PORT=8821
+    command: ["npm", "run", "start-local"]
+    env_file:
+      - .env
+
+
+networks:
+  default:
+    external:
+      name: intrepid_apps

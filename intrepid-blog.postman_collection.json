@@ -1,0 +1,249 @@
+{
+	"info": {
+		"_postman_id": "6b3a9ffc-8d14-4209-aab3-64f9e37fa0e4",
+		"name": "intrepid-blog",
+		"description": "Used for testing and demonstrating the blog framework",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "content-type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"bob@blogger.com\",\n    \"password\": \"cdec7f87-c5af-4835-a338-0b4abf125528\",\n    \"fName\": \"Bob\",\n    \"lName\": \"Blogger\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8821/api/auth/register",
+					"host": [
+						"localhost"
+					],
+					"port": "8821",
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				},
+				"description": "Registers User"
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "content-type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"bob@blogger.com\",\n    \"password\": \"cdec7f87-c5af-4835-a338-0b4abf125528\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8821/api/auth/authenticate",
+					"host": [
+						"localhost"
+					],
+					"port": "8821",
+					"path": [
+						"api",
+						"auth",
+						"authenticate"
+					]
+				},
+				"description": "Logs in user"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Post",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTYwNDA4MzAsInVzZXJfaWQiOjEsInVzZXJfZW1haWwiOiJib2JAYmxvZ2dlci5jb20ifQ.14WI8d2bYJv9MD30wr77SndLwNo5i_vco_nyIOzucJM",
+						"type": "text"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"My Awesome Blog Post\",\n    \"content\": \"<p>Some HTML Here</p>\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8821/api/posts/",
+					"host": [
+						"localhost"
+					],
+					"port": "8821",
+					"path": [
+						"api",
+						"posts",
+						""
+					]
+				},
+				"description": "Creates a blog post"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Post Unauthorized",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8821/api/posts/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8821",
+					"path": [
+						"api",
+						"posts",
+						"1"
+					]
+				},
+				"description": "Gets a single post by id"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Posts Unauthorized",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "localhost:8821/api/posts/?skip=0&take=20",
+					"host": [
+						"localhost"
+					],
+					"port": "8821",
+					"path": [
+						"api",
+						"posts",
+						""
+					],
+					"query": [
+						{
+							"key": "skip",
+							"value": "0"
+						},
+						{
+							"key": "take",
+							"value": "20"
+						}
+					]
+				},
+				"description": "Gets posts, but you must have a skip and take from the front end so we can use pagination or virtual scrolling"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Posts By Author Id Unauthorized",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8821/api/posts/user/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8821",
+					"path": [
+						"api",
+						"posts",
+						"user",
+						"1"
+					]
+				},
+				"description": "Gets all posts by author id"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Posts By Author Id Authorized",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				},
+				"description": "Gets all posts by author id"
+			},
+			"response": []
+		},
+		{
+			"name": "Edit Post",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "authorization",
+						"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTYwNDA4MzAsInVzZXJfaWQiOjEsInVzZXJfZW1haWwiOiJib2JAYmxvZ2dlci5jb20ifQ.14WI8d2bYJv9MD30wr77SndLwNo5i_vco_nyIOzucJM",
+						"type": "text"
+					},
+					{
+						"key": "content-type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"My Awesome Blog Post Published\",\n    \"content\": \"<p>Some Published HTML Here</p>\",\n    \"published\": true\n}"
+				},
+				"url": {
+					"raw": "localhost:8821/api/posts/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8821",
+					"path": [
+						"api",
+						"posts",
+						"1"
+					]
+				},
+				"description": "Edits post"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Post",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				},
+				"description": "Delete Post"
+			},
+			"response": []
+		}
+	]
+}

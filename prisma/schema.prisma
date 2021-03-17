@@ -1,0 +1,33 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  //normally this would be with the env file, but I'm having trouble with prisma 2.0 and docker to allow that to work
+  //and not enough time to debug it.
+  url      = "postgresql://intrepid-admin:d22fdec943f819ae7d2df6249fdc0cea@intrepid-postgres:5432/intrepid-blog-db?schema=blog"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  title     String   @db.VarChar(255)
+  createdAt DateTime @default(now()) @db.Timestamp(6)
+  updatedAt DateTime @default(now()) @db.Timestamp(6)
+  content   String?
+  published Boolean  @default(false)
+  authorId  Int
+  user      User     @relation(fields: [authorId], references: [id])
+}
+
+model User {
+  id            Int      @id @default(autoincrement())
+  fName         String   @db.VarChar(255)
+  lName         String   @db.VarChar(255)
+  email         String   @unique @db.VarChar(255)
+  passwordHash  String
+  posts         Post[]
+}
